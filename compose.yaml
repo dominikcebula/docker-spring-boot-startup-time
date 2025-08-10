@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:16'
+    environment:
+      - 'POSTGRES_DB=exchange-rates-db'
+      - 'POSTGRES_USER=app'
+      - 'POSTGRES_PASSWORD=appsecret'
+    ports:
+      - '5432'
