@@ -6,4 +6,4 @@ services:
       - 'POSTGRES_USER=app'
       - 'POSTGRES_PASSWORD=appsecret'
     ports:
-      - '5432'
+      - '5432:5432'
