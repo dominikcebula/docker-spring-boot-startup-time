@@ -2,6 +2,8 @@ package com.dominikcebula.sample.exchange.rates.web;
 
 import com.dominikcebula.sample.exchange.rates.db.ExchangeRate;
 import com.dominikcebula.sample.exchange.rates.service.ExchangeRateService;
+import com.dominikcebula.sample.exchange.rates.web.dto.ExchangeRateDto;
+import com.dominikcebula.sample.exchange.rates.web.dto.ExchangeRatesResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

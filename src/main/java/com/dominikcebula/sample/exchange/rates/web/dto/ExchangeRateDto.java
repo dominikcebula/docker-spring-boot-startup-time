@@ -1,4 +1,4 @@
-package com.dominikcebula.sample.exchange.rates.web;
+package com.dominikcebula.sample.exchange.rates.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
