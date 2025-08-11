@@ -1,0 +1,17 @@
+FROM eclipse-temurin:24-jre AS builder
+
+COPY target/exchange-rates-sample-*.jar app.jar
+RUN java -Djarmode=layertools -jar app.jar extract
+
+FROM eclipse-temurin:24-jre
+
+COPY --from=builder dependencies/ ./
+COPY --from=builder snapshot-dependencies/ ./
+COPY --from=builder spring-boot-loader/ ./
+COPY --from=builder application/ ./
+
+COPY app.aot ./app.aot
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-XX:AOTCache=app.aot", "-Djava.security.egd=file:/dev/./urandom", "org.springframework.boot.loader.launch.JarLauncher"]
