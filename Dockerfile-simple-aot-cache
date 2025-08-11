@@ -1,0 +1,6 @@
+FROM eclipse-temurin:24-jre
+WORKDIR /app
+COPY target/exchange-rates-sample-*.jar app.jar
+COPY app.aot app.aot
+EXPOSE 8080
+ENTRYPOINT ["java", "-XX:AOTCache=app.aot", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
