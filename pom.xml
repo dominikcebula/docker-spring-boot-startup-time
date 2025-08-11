@@ -70,6 +70,18 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>with-spring-indexer</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context-indexer</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
