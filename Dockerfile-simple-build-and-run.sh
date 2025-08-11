@@ -1,4 +1,5 @@
 #!/bin/bash
 
+mvn clean install
 docker build -t exchange-rates-docker-simple -f Dockerfile-simple .
 docker run --rm --cpus 0.5 -m 768mb -p 8080:8080 -e DB_HOST=host.docker.internal exchange-rates-docker-simple
