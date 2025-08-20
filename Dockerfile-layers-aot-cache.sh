@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xe
+
 mvn clean install
 
 java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -Dspring.context.exit=onRefresh -jar target/exchange-rates-sample-*.jar

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xe
+
 mvn clean install
 
 docker build -t exchange-rates-docker-simple-aot-cache -f Dockerfile-simple-aot-cache --network=host .

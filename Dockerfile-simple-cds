@@ -1,0 +1,19 @@
+FROM eclipse-temurin:21-jre AS builder
+
+COPY target/exchange-rates-sample-*.jar app.jar
+RUN java -Djarmode=layertools -jar app.jar extract
+
+RUN java -XX:ArchiveClassesAtExit=application.jsa \
+    -Dspring.context.exit=onRefresh \
+    -jar app.jar || true
+
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+COPY target/exchange-rates-sample-*.jar app.jar
+COPY --from=builder application.jsa application.jsa
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-XX:SharedArchiveFile=application.jsa", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]

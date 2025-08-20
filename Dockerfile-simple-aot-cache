@@ -3,8 +3,7 @@ FROM eclipse-temurin:24-jre AS builder
 COPY target/exchange-rates-sample-*.jar app.jar
 
 RUN java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -Dspring.context.exit=onRefresh -jar app.jar
-RUN java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -jar app.jar \
-      && rm app.aotconf
+RUN java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -jar app.jar
 
 FROM eclipse-temurin:24-jre
 
