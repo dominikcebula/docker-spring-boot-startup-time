@@ -33,7 +33,7 @@ configuration, and the startup time is measured.
 To simulate a real-world scenario, the application contains REST API and is configured to connect to a PostgreSQL
 database. Liquibase is used to manage the database schema.
 
-Additionally, **resources are limited** to 0.5 vCPU and 768MB of memory to simulate limited resources under the
+Additionally, **resources are limited** to **0.5 vCPU** and **768MB of memory** to simulate limited resources under the
 Kubernetes
 Cluster.
 
