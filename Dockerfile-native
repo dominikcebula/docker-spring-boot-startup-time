@@ -1,0 +1,9 @@
+FROM maven:3.9-eclipse-temurin-21 AS builder
+
+ENV DOCKER_HOST=tcp://host.docker.internal:2375
+
+COPY . /build
+
+WORKDIR /build
+
+RUN --mount=type=cache,target=/root/.m2 mvn clean spring-boot:build-image -Pnative

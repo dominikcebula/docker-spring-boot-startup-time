@@ -1,5 +1,19 @@
+FROM maven:3.9-eclipse-temurin-21 AS builder
+
+ARG MVN_PROFILE=""
+
+COPY . /build
+
+WORKDIR /build
+
+RUN --mount=type=cache,target=/root/.m2 mvn clean install ${MVN_PROFILE}
+
 FROM eclipse-temurin:21-jre
+
 WORKDIR /app
-COPY target/exchange-rates-sample-*.jar app.jar
+
+COPY --from=builder /build/target/exchange-rates-sample-*.jar app.jar
+
 EXPOSE 8080
+
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]

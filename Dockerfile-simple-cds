@@ -1,18 +1,30 @@
-FROM eclipse-temurin:21-jre AS builder
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
-COPY target/exchange-rates-sample-*.jar app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
+COPY . /build
+
+WORKDIR /build
+
+RUN --mount=type=cache,target=/root/.m2 mvn clean install
+
+WORKDIR /build/target
+
+RUN cp exchange-rates-sample-*.jar app.jar
+
+FROM eclipse-temurin:21-jre AS cds-builder
+
+COPY --from=builder /build/target/app.jar app.jar
 
 RUN java -XX:ArchiveClassesAtExit=application.jsa \
     -Dspring.context.exit=onRefresh \
-    -jar app.jar || true
+    -Djava.security.egd=file:/dev/./urandom \
+    -jar app.jar
 
 FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY target/exchange-rates-sample-*.jar app.jar
-COPY --from=builder application.jsa application.jsa
+COPY --from=builder /build/target/app.jar app.jar
+COPY --from=cds-builder application.jsa application.jsa
 
 EXPOSE 8080
 

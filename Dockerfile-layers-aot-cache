@@ -1,16 +1,39 @@
-FROM eclipse-temurin:24-jre AS builder
+FROM maven:3.9-eclipse-temurin-24 AS builder
 
-COPY target/exchange-rates-sample-*.jar app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
+ARG MVN_PROFILE=""
+
+COPY . /build
+
+WORKDIR /build
+
+RUN --mount=type=cache,target=/root/.m2 mvn clean install ${MVN_PROFILE}
+
+RUN mkdir target/layers \
+    && cp target/exchange-rates-sample-*.jar target/layers
+
+WORKDIR /build/target/layers
+
+RUN java -Djarmode=layertools -jar exchange-rates-sample-*.jar extract
+
+FROM eclipse-temurin:24-jre AS aot-cache
+
+COPY --from=builder /build/target/layers/dependencies/ ./
+COPY --from=builder /build/target/layers/snapshot-dependencies/ ./
+COPY --from=builder /build/target/layers/spring-boot-loader/ ./
+COPY --from=builder /build/target/layers/application/ ./
+
+RUN java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -Dspring.context.exit=onRefresh -Djava.security.egd=file:/dev/./urandom org.springframework.boot.loader.launch.JarLauncher
+RUN java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -Djava.security.egd=file:/dev/./urandom org.springframework.boot.loader.launch.JarLauncher \
+      && rm app.aotconf
 
 FROM eclipse-temurin:24-jre
 
-COPY --from=builder dependencies/ ./
-COPY --from=builder snapshot-dependencies/ ./
-COPY --from=builder spring-boot-loader/ ./
-COPY --from=builder application/ ./
+COPY --from=builder /build/target/layers/dependencies/ ./
+COPY --from=builder /build/target/layers/snapshot-dependencies/ ./
+COPY --from=builder /build/target/layers/spring-boot-loader/ ./
+COPY --from=builder /build/target/layers/application/ ./
 
-COPY app.aot ./app.aot
+COPY --from=aot-cache app.aot ./app.aot
 
 EXPOSE 8080
 

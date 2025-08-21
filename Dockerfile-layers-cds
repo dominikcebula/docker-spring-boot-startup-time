@@ -1,19 +1,40 @@
-FROM eclipse-temurin:21-jre AS builder
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
-COPY target/exchange-rates-sample-*.jar app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
+ARG MVN_PROFILE=""
+
+COPY . /build
+
+WORKDIR /build
+
+RUN --mount=type=cache,target=/root/.m2 mvn clean install ${MVN_PROFILE}
+
+RUN mkdir target/layers \
+    && cp target/exchange-rates-sample-*.jar target/layers
+
+WORKDIR /build/target/layers
+
+RUN java -Djarmode=layertools -jar exchange-rates-sample-*.jar extract
+
+FROM eclipse-temurin:21-jre AS cds-builder
+
+COPY --from=builder /build/target/layers/dependencies/ ./
+COPY --from=builder /build/target/layers/snapshot-dependencies/ ./
+COPY --from=builder /build/target/layers/spring-boot-loader/ ./
+COPY --from=builder /build/target/layers/application/ ./
 
 RUN java -XX:ArchiveClassesAtExit=application.jsa \
     -Dspring.context.exit=onRefresh \
-    -jar app.jar || true
+    -Djava.security.egd=file:/dev/./urandom \
+    org.springframework.boot.loader.launch.JarLauncher
 
 FROM eclipse-temurin:21-jre
 
-COPY --from=builder dependencies/ ./
-COPY --from=builder snapshot-dependencies/ ./
-COPY --from=builder spring-boot-loader/ ./
-COPY --from=builder application/ ./
-COPY --from=builder application.jsa ./application.jsa
+COPY --from=builder /build/target/layers/dependencies/ ./
+COPY --from=builder /build/target/layers/snapshot-dependencies/ ./
+COPY --from=builder /build/target/layers/spring-boot-loader/ ./
+COPY --from=builder /build/target/layers/application/ ./
+
+COPY --from=cds-builder application.jsa ./application.jsa
 
 EXPOSE 8080
 

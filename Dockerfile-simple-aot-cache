@@ -1,16 +1,28 @@
-FROM eclipse-temurin:24-jre AS builder
+FROM maven:3.9-eclipse-temurin-24 AS builder
 
-COPY target/exchange-rates-sample-*.jar app.jar
+COPY . /build
 
-RUN java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -Dspring.context.exit=onRefresh -jar app.jar
-RUN java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -jar app.jar
+WORKDIR /build
+
+RUN --mount=type=cache,target=/root/.m2 mvn clean install
+
+WORKDIR /build/target
+
+RUN cp exchange-rates-sample-*.jar app.jar
+
+FROM eclipse-temurin:24-jre AS cds-builder
+
+COPY --from=builder /build/target/app.jar app.jar
+
+RUN java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -Dspring.context.exit=onRefresh -Djava.security.egd=file:/dev/./urandom -jar app.jar
+RUN java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -Djava.security.egd=file:/dev/./urandom -jar app.jar
 
 FROM eclipse-temurin:24-jre
 
 WORKDIR /app
 
-COPY --from=builder app.jar app.jar
-COPY --from=builder app.aot app.aot
+COPY --from=builder /build/target/app.jar app.jar
+COPY --from=cds-builder app.aot app.aot
 
 EXPOSE 8080
 
