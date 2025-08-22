@@ -47,10 +47,12 @@ database. Liquibase is used to manage the database schema.
 Additionally, **resources are limited** to **0.5 vCPU** and **768MB of memory** to simulate limited resources under the
 Kubernetes Cluster.
 
-### Hardware and Limits
+### OS, Hardware, and Limits
 
-- CPU: Intel(R) Core(TM) i7-12700 12th Gen 12 Cores, 20 Threads, 25M Cache, up to 4.90 GHz
 - OS: Linux, Ubuntu 24.04.3 LTS, Kernel 6.8.0-78-generic SMP x86_64
+- CPU: Intel(R) Core(TM) i7-12700 12th Gen 12 Cores, 20 Threads, 25M Cache, up to 4.90 GHz
+- Memory: 2x16GB DDR4 3200 MHz Samsung M378A1K43EB2-CWE
+- Storage: SSD NVMe M.2 2280 PCIe 3.0 x4 1TB Samsung MZVLQ1T0HBLB-00BH1
 - Limits during measurements
   - CPU: 0.5 vCPU
   - Memory: 768MB RAM
