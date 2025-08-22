@@ -10,6 +10,18 @@ The measurements are performed using Docker, and the results will help in unders
 affect the startup time of a Spring Boot application. The focus is on configurations such as using Spring Native, Spring
 Indexer, Layertools, Class Data Sharing (CDS), Ahead-of-Time (AOT) compilation.
 
+## Why does startup time matter?
+
+In modern cloud-native applications, especially those deployed in Kubernetes environments, startup time is a critical
+factor. Faster startup times lead to:
+
+- Improved scalability: Applications can scale up more quickly in response to demand.
+- Reduced cold start latency: Particularly important for serverless applications where functions need to start quickly.
+- Optimized CI/CD pipelines: Faster startup times can lead to quicker feedback loops in continuous integration and
+  deployment processes.
+- Faster development cycles: Developers can iterate and test changes more rapidly.
+- Improved resilience: Applications can recover from failures more quickly, maintaining availability.
+
 ## Technologies Used
 
 - Java 21, Java 24
