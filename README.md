@@ -52,7 +52,19 @@ Kubernetes Cluster.
 
 #### Observations
 
-TBD
+- native image is by far the fastest option, starting in less than half a second, delivers 98.03% optimization compared
+  to a worst case scenario
+  - mind risks of using native image, especially regarding reflection, proxies, and other dynamic features of Java
+  - in my case liquibase caused issues and had to be set to the specific version
+- using unpacked layered jar with CDS provides the best performance among JVM-based options, reducing startup time by
+  almost 30%
+- using CDS without layered jars provides some improvement in startup time (almost 14%)
+- using Spring Indexer provides a small improvement in startup time (1% - 4%)
+- AOT does not provide as good improvements in startup time as CDS — this is surprising, as AOT is supposed to suppress
+  CDS
+- using layered jars provides a noticeable improvement in startup time compared to a standard jar
+- combining multiple optimizations (e.g., unpacked layered jar + CDS + indexer) provides the best performance among
+  JVM-based options
 
 #### Raw data
 
