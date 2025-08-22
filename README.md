@@ -48,11 +48,27 @@ Kubernetes Cluster.
 
 #### Summary
 
+![measurements.png](measurements.png)
+
+#### Observations
+
 TBD
 
 #### Raw data
 
-TBD
+| Configuration                        | Measurement #1 [s] | Measurement #2 [s] | Measurement #3 [s] | Average [s] | % Relative to Base | Optimization vs Base |
+|--------------------------------------|--------------------|--------------------|--------------------|-------------|--------------------|----------------------|
+| app jar                              | 22.043             | 22.583             | 23.363             | 22.663      | 100.00%            | 0.00%                |
+| app jar + indexer                    | 22.406             | 21.840             | 23.136             | 22.461      | 99.11%             | 0.89%                |
+| app jar + cds                        | 18.055             | 20.519             | 19.994             | 19.523      | 86.14%             | 13.86%               |
+| app jar + aot                        | 23.404             | 21.633             | 22.179             | 22.405      | 98.86%             | 1.14%                |
+| unpacked layered jar                 | 19.646             | 20.370             | 20.329             | 20.115      | 88.76%             | 11.24%               |
+| unpacked layered jar + indexer       | 19.204             | 20.085             | 19.560             | 19.616      | 86.56%             | 13.44%               |
+| unpacked layered jar + cds           | 16.639             | 15.977             | 15.557             | 16.058      | 70.85%             | 29.15%               |
+| unpacked layered jar + cds + indexer | 15.597             | 15.824             | 16.717             | 16.046      | 70.80%             | 29.20%               |
+| unpacked layered jar + aot           | 17.376             | 18.204             | 17.314             | 17.631      | 77.80%             | 22.20%               |
+| unpacked layered jar + aot + indexer | 15.542             | 17.513             | 16.678             | 16.578      | 73.15%             | 26.85%               |
+| native image                         | 0.439              | 0.467              | 0.436              | 0.447       | 1.97%              | 98.03%               |
 
 ## How to Run
 
