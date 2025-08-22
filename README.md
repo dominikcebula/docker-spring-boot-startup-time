@@ -13,7 +13,7 @@ Indexer, Layertools, Class Data Sharing (CDS), Ahead-of-Time (AOT) compilation.
 ## Technologies Used
 
 - Java 21, Java 24
-- Spring Boot
+- Spring Boot 3.5.x
 - Spring Native
 - Spring Indexer
 - Layertools
@@ -34,8 +34,15 @@ To simulate a real-world scenario, the application contains REST API and is conf
 database. Liquibase is used to manage the database schema.
 
 Additionally, **resources are limited** to **0.5 vCPU** and **768MB of memory** to simulate limited resources under the
-Kubernetes
-Cluster.
+Kubernetes Cluster.
+
+### Hardware and Limits
+
+- CPU: Intel(R) Core(TM) i7-12700 12th Gen 12 Cores, 20 Threads, 25M Cache, up to 4.90 GHz
+- OS: Linux, Ubuntu 24.04.3 LTS, Kernel 6.8.0-78-generic SMP x86_64
+- Limits during measurements
+  - CPU: 0.5 vCPU
+  - Memory: 768MB RAM
 
 ### Measurements Results
 
