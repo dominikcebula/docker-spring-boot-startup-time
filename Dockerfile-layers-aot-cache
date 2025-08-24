@@ -1,12 +1,10 @@
 FROM maven:3.9-eclipse-temurin-24 AS builder
 
-ARG MVN_PROFILE=""
-
 COPY . /build
 
 WORKDIR /build
 
-RUN --mount=type=cache,target=/root/.m2 mvn clean install ${MVN_PROFILE}
+RUN --mount=type=cache,target=/root/.m2 mvn clean install
 
 RUN mkdir target/layers \
     && cp target/exchange-rates-sample-*.jar target/layers
