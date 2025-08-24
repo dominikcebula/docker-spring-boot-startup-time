@@ -72,12 +72,11 @@ Kubernetes Cluster.
 - using unpacked layered jar with CDS provides the best performance among JVM-based options, reducing startup time by
   almost 30%
 - using CDS without layered jars provides some improvement in startup time (almost 14%)
-- using Spring Indexer provides a small improvement in startup time (1% - 4%)
-- AOT does not provide as good improvements in startup time as CDS — this is surprising, as AOT is supposed to suppress
+- using Spring Indexer provides a small improvement in startup time (1% - 3%)
+- AOT does not provide as good improvements in startup time as CDS, CDS is faster by 6.95% for unpacked layer case and
+  faster by 12.72% for app jar case — this is surprising, as AOT is supposed to suppress
   CDS
 - using layered jars provides a noticeable improvement in startup time compared to a standard jar
-- combining multiple optimizations (e.g., unpacked layered jar + CDS) provides the best performance among
-  JVM-based options
 
 #### Raw data
 
