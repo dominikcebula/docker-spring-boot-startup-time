@@ -12,7 +12,7 @@ Indexer, Layertools, Class Data Sharing (CDS), Ahead-of-Time (AOT) compilation.
 
 ## Why does startup time matter?
 
-In modern cloud-native applications, startup time is a critical factor. Faster startup times lead to:
+In modern cloud-native applications, startup time is an important factor. Faster startup times lead to:
 
 - Improved scalability: Applications can scale up more quickly in response to demand.
 - Reduced cold start latency: Particularly important for serverless applications where functions need to start quickly.
