@@ -90,9 +90,7 @@ Kubernetes Cluster.
 | unpacked layered jar                 | 19.646             | 20.370             | 20.329             | 20.115      | 88.76%             | 11.24%               |
 | unpacked layered jar + indexer       | 19.204             | 20.085             | 19.560             | 19.616      | 86.56%             | 13.44%               |
 | unpacked layered jar + cds           | 16.639             | 15.977             | 15.557             | 16.058      | 70.85%             | 29.15%               |
-| unpacked layered jar + cds + indexer | 15.597             | 15.824             | 16.717             | 16.046      | 70.80%             | 29.20%               |
 | unpacked layered jar + aot           | 17.376             | 18.204             | 17.314             | 17.631      | 77.80%             | 22.20%               |
-| unpacked layered jar + aot + indexer | 15.542             | 17.513             | 16.678             | 16.578      | 73.15%             | 26.85%               |
 | native image                         | 0.439              | 0.467              | 0.436              | 0.447       | 1.97%              | 98.03%               |
 
 ## How to Run
