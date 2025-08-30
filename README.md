@@ -8,7 +8,7 @@ Boot applications, especially in the context of containerized environments like 
 
 The measurements are performed using Docker, and the results will help in understanding how different configurations
 affect the startup time of a Spring Boot application. The focus is on configurations such as using Spring Native, Spring
-Indexer, Layertools, Class Data Sharing (CDS), Ahead-of-Time (AOT) compilation.
+Indexer, Layertools, Class Data Sharing (CDS), AOT Cache.
 
 ## Why does startup time matter?
 
@@ -29,7 +29,7 @@ In modern cloud-native applications, startup time is an important factor. Faster
 - Spring Indexer
 - Layertools
 - CDS
-- AOT
+- AOT Cache
 - Docker
 - Docker Compose
 - Maven
@@ -73,9 +73,8 @@ Kubernetes Cluster.
   almost 30%
 - using CDS without layered jars provides some improvement in startup time (almost 14%)
 - using Spring Indexer provides a small improvement in startup time (1% - 3%)
-- AOT does not provide as good improvements in startup time as CDS, CDS is faster by 6.95% for unpacked layer case and
-  faster by 12.72% for app jar case — this is surprising, as AOT is supposed to suppress
-  CDS
+- AOT Cache does not provide as good improvements in startup time as CDS, CDS is faster by 6.95% for unpacked layer case
+  and faster by 12.72% for app jar case — this is surprising, as AOT Cache is supposed to suppress CDS
 - using layered jars provides a noticeable improvement in startup time compared to a standard jar
 
 #### Raw data
