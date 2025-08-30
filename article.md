@@ -4,7 +4,7 @@
 
 Spring Boot is a popular framework for building Java applications, widely adopted in cloud-native and containerized
 environments. As applications increasingly run in dynamic infrastructures like Kubernetes, startup time has become a
-critical metric, impacting scalability, resilience, and developer productivity.
+critical metric, impacting **scalability**, **resilience (recovery after failure)**, and **developer productivity**.
 
 This article investigates how different build and runtime configurations affect the startup time of a Spring Boot
 application.
@@ -15,8 +15,8 @@ In modern cloud-native applications, startup time is an important factor. Faster
 
 - Improved scalability: Applications can scale up more quickly in response to demand.
 - Reduced cold start latency: Particularly important for serverless applications where functions need to start quickly.
-- Optimized CI/CD pipelines: Faster startup times can lead to quicker feedback loops in continuous integration and
-  deployment processes.
+- Optimized CI/CD pipelines: Faster startup times can lead to quicker feedback loops from integration tests in
+  continuous integration and deployment processes.
 - Faster development cycles: Developers can iterate and test changes more rapidly.
 - Improved resilience: Applications can recover from failures more quickly, maintaining availability.
 
@@ -33,15 +33,12 @@ The following chart summarizes the average startup times for each configuration 
 - native image is by far the fastest option, starting in less than half a second, delivers 98.03% optimization compared
   to a worst case scenario
     - mind risks of using native image, especially regarding reflection, proxies, and other dynamic features of Java
-    - in my case liquibase caused issues and had to be set to the specific version
 - using unpacked layered jar with CDS provides the best performance among JVM-based options, reducing startup time by
   almost 30%
 - using CDS without layered jars provides some improvement in startup time (almost 14%)
 - using Spring Indexer provides a small improvement in startup time (1% - 3%)
 - AOT Cache does not provide as good improvements in startup time as CDS, CDS is faster by 6.95% for unpacked layer case
-  and
-  faster by 12.72% for app jar case — this is surprising, as AOT Cache is supposed to suppress
-  CDS
+  and faster by 12.72% for app jar case — this is surprising, as AOT Cache is supposed to suppress CDS
 - using layered jars provides a noticeable improvement in startup time compared to a standard jar
 
 ### Raw Data
