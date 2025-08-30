@@ -2,7 +2,12 @@
 
 ## Introduction
 
-TBD
+Spring Boot is a popular framework for building Java applications, widely adopted in cloud-native and containerized
+environments. As applications increasingly run in dynamic infrastructures like Kubernetes, startup time has become a
+critical metric, impacting scalability, resilience, and developer productivity.
+
+This article investigates how different build and runtime configurations affect the startup time of a Spring Boot
+application.
 
 ## Why does startup time matter?
 
@@ -19,6 +24,8 @@ In modern cloud-native applications, startup time is an important factor. Faster
 
 ### Summary
 
+The following chart summarizes the average startup times for each configuration tested.
+
 ![measurements.png](measurements.png)
 
 ### Conclusions
@@ -31,8 +38,9 @@ In modern cloud-native applications, startup time is an important factor. Faster
   almost 30%
 - using CDS without layered jars provides some improvement in startup time (almost 14%)
 - using Spring Indexer provides a small improvement in startup time (1% - 3%)
-- AOT does not provide as good improvements in startup time as CDS, CDS is faster by 6.95% for unpacked layer case and
-  faster by 12.72% for app jar case — this is surprising, as AOT is supposed to suppress
+- AOT Cache does not provide as good improvements in startup time as CDS, CDS is faster by 6.95% for unpacked layer case
+  and
+  faster by 12.72% for app jar case — this is surprising, as AOT Cache is supposed to suppress
   CDS
 - using layered jars provides a noticeable improvement in startup time compared to a standard jar
 
@@ -75,7 +83,7 @@ section in the [README.md](https://github.com/dominikcebula/spring-boot-startup-
 - Spring Indexer
 - Layertools
 - CDS
-- AOT
+- AOT Cache
 - Docker
 - Docker Compose
 - Maven
@@ -92,8 +100,25 @@ section in the [README.md](https://github.com/dominikcebula/spring-boot-startup-
 
 ## Summary
 
-TBD
+In this article, I explored various strategies to optimize the startup time of a Spring Boot application. The
+configurations tested included standard application jars, layered jars, the use of the Spring Indexer, Class Data
+Sharing (CDS), AOT Cache, and native images. Each configuration was measured in a controlled
+Docker environment to simulate real-world deployment scenarios with limited resources.
+
+The measurements clearly show that the choice of runtime configuration has a significant impact on Spring Boot
+application startup time. The native image approach delivers the fastest startup by a wide margin, starting in less than
+half a second and achieving a 98% reduction compared to the baseline fat jar. Among JVM-based options, using unpacked
+layered jars with Class Data Sharing (CDS) provides the best improvement, reducing startup time by nearly 30%. Layered
+jars alone and the use of the Spring Indexer offer moderate gains, while AOT compilation with the current setup does not
+outperform CDS. These results highlight that, for most JVM deployments, combining layered jars with CDS is the most
+effective way to optimize startup time without the complexity and limitations of native images.
 
 ## References
 
-TBD
+- Class data sharing :: Spring Boot. (
+  n.d.). https://docs.spring.io/spring-boot/reference/packaging/class-data-sharing.html#packaging.class-data-sharing.cds
+- AOT Cache :: Spring Boot. (
+  n.d.-b). https://docs.spring.io/spring-boot/reference/packaging/class-data-sharing.html#packaging.class-data-sharing.aot-cache
+- GRAALVM Native Images :: Spring Boot. (
+  n.d.). https://docs.spring.io/spring-boot/reference/packaging/native-image/index.html
+- Native image. (n.d.-b). https://www.graalvm.org/jdk21/reference-manual/native-image/
