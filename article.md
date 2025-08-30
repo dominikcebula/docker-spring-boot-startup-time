@@ -3,7 +3,7 @@
 ## Introduction
 
 Spring Boot is a popular framework for building Java applications, widely adopted in cloud-native and containerized
-environments. As applications increasingly run in dynamic infrastructures like Kubernetes, startup time has become a
+environments. As applications increasingly run in dynamic infrastructures like Kubernetes, **startup time** has become a
 critical metric, impacting **scalability**, **resilience (recovery after failure)**, and **developer productivity**.
 
 This article investigates how different build and runtime configurations affect the startup time of a Spring Boot
